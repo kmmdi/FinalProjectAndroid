@@ -45,24 +45,24 @@ public class Retriever extends AsyncTask<Void,Void,Object> {
         super.onPostExecute(data);
         progressDialog.dismiss();
 
-        if(data.toString().startsWith("Error")) {
+        if (data.toString().startsWith("Error")) {
             Toast.makeText(context,data.toString(),Toast.LENGTH_SHORT).show();
         } else {
+            Toast.makeText(context, "News Retrieving Complete",Toast.LENGTH_SHORT).show();
             new FeedParser(context, (InputStream) data, listView).execute();
         }
     }
 
     private Object retrieveNewsData() {
-        Object connection= HttpConnector.connect(feedUrl);
+        Object connection = HttpConnector.connect(feedUrl);
         if(connection.toString().startsWith("Error")) {
             return connection.toString();
         }
 
         try {
-            HttpURLConnection con= (HttpURLConnection) connection;
-            InputStream is=new BufferedInputStream(con.getInputStream());
-            return is;
-
+            HttpURLConnection httpURLConnection = (HttpURLConnection) connection;
+            InputStream inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
+            return inputStream;
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("IO_ERROR", e.getMessage());

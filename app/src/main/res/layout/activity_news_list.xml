@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/newsListLinear"
+    android:gravity="top"
+    android:orientation="vertical"
     tools:context=".NewsList">
 
-    <include layout="@layout/list_content" />
+    <EditText
+        android:id="@+id/editTextNewsList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/news_list_edit_text"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/saveNoteNewsList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_note" />
+
+    <ListView
+        android:id="@+id/main_list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

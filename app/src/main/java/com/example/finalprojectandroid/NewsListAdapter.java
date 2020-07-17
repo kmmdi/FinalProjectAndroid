@@ -1,6 +1,7 @@
 package com.example.finalprojectandroid;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.Html;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 import java.util.ArrayList;
 
 public class NewsListAdapter extends BaseAdapter {
@@ -61,7 +64,24 @@ public class NewsListAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openArticleOnWeb(title, description, date, guid, link);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Loading News from BBC")
+                    .setMessage("Do you want to continue?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            openArticleOnWeb(title, description, date, guid, link);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(context,"Selected Option: No",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                AlertDialog dialog  = builder.create();
+                dialog.show();
             }
         });
 
