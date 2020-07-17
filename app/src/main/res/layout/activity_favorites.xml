@@ -12,7 +12,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/newsListLinear"
+        android:id="@+id/favListLinear"
         android:gravity="top"
         android:orientation="vertical"
         tools:context=".NewsList">
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"/>
 
         <EditText
-            android:id="@+id/editTextNewsList"
+            android:id="@+id/editTextFav"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -31,23 +31,23 @@
             android:text="@string/news_list_edit_text"/>
 
         <Button
-            android:id="@+id/saveNoteNewsList"
+            android:id="@+id/saveNoteFav"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/save_note" />
 
         <ListView
-            android:id="@+id/main_list_view"
+            android:id="@+id/fav_list_view"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
 
     <include
-    layout="@layout/navigation_drawer_view"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_gravity="start"
-    android:fitsSystemWindows="true"/>
+        layout="@layout/navigation_drawer_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

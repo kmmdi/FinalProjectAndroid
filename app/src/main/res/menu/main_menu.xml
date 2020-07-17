@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/myHome"
+        android:icon="@drawable/home"
+        app:showAsAction="always"
+        android:title="Home">
+    </item>
+    <item
+        android:id="@+id/myNews"
+        android:icon="@drawable/news"
+        app:showAsAction="always"
+        android:title="News">
+    </item>
+    <item
+        android:id="@+id/myFav"
+        android:icon="@drawable/favorites"
+        app:showAsAction="always"
+        android:title="Favorites">
+    </item>
+    <item
+        android:id="@+id/mySettings"
+        android:icon="@drawable/settings"
+        app:showAsAction="always"
+        android:title="Settings">
+    </item>
+</menu>

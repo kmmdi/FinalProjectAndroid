@@ -1,36 +1,33 @@
 package com.example.finalprojectandroid;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-public class NewsList extends AppCompatActivity {
+public class Favorites extends AppCompatActivity {
 
-    final static String ACTIVITY_NAME = "News";
+    final static String ACTIVITY_NAME = "Favorites";
     final static String ACTIVITY_VERSION = "1.0.0";
-    final static String feedUrl ="http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_list);
+        setContentView(R.layout.activity_favorites);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbar);
@@ -47,7 +44,7 @@ public class NewsList extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 View rootView = getWindow().getDecorView().getRootView();
-                return NavigationUtils.onNavigationItemSelectedHelper(item, NewsList.this, rootView);
+                return NavigationUtils.onNavigationItemSelectedHelper(item, Favorites.this, rootView);
             }
         });
         View header = navigationView.getHeaderView(0);
@@ -56,25 +53,36 @@ public class NewsList extends AppCompatActivity {
         activityName.setText(ACTIVITY_NAME);
         activityVersion.setText(ACTIVITY_VERSION);
 
-        LinearLayout newsListLayout = findViewById(R.id.newsListLinear);
-        // TODO: Put the EditText and associated button in Fragment [req 5]
-        final EditText et = (EditText)findViewById(R.id.editTextNewsList);
-        // TODO: Check if SharedPref present, if so, then set it to SharedPref [req: 10]
-        Button saveNote = (Button)findViewById(R.id.saveNoteNewsList);
-        saveNote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: implement sharing to SharedPref [req: 10]
-                et.setText(et.getText());
-                et.setFocusable(false);
-                et.setFocusableInTouchMode(false);
-                et.setClickable(false);
-            }
-        });
-        final ListView listView= (ListView) findViewById(R.id.main_list_view);
-        Snackbar snackbar = Snackbar.make(newsListLayout,"News Headlines from BBC",Snackbar.LENGTH_SHORT);
+        LinearLayout favoritesLayout = findViewById(R.id.favListLinear);
+        Toast.makeText(Favorites.this,"Favorites Page Loaded",Toast.LENGTH_SHORT).show();
+        Snackbar snackbar = Snackbar.make(favoritesLayout,"Welcome to Favorites Page",Snackbar.LENGTH_SHORT);
         snackbar.show();
-        new Retriever(NewsList.this, feedUrl,listView).execute();
+        // TODO: Implement and Put the EditText and associated button in Fragment [req 5]
+
+        // TODO: Load favorites from DB and put them in listView [req 8]
+        // TODO: Long Press for option to remove from DB (and list view) [req 8]
+        // TODO: Show Alert dialog - utilize showAlert below
+    }
+
+    private void showAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Favorites.this);
+        builder.setTitle("PLACE HOLDER TEXT // Maybe for deletion")
+                .setMessage("Do you want to continue?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO: Do my action here
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(Favorites.this,"Selected Option: No",Toast.LENGTH_SHORT).show();
+                    }
+                });
+        AlertDialog dialog  = builder.create();
+        dialog.show();
     }
 
     @Override

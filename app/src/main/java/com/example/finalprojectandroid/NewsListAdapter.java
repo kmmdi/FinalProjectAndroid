@@ -65,7 +65,7 @@ public class NewsListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Loading News from BBC")
+                builder.setTitle("Opening News in a Browser")
                     .setMessage("Do you want to continue?")
                     .setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {

@@ -1,26 +1,63 @@
 package com.example.finalprojectandroid;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
+
+    final static String ACTIVITY_NAME = "Home";
+    final static String ACTIVITY_VERSION = "1.0.0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RelativeLayout rl = findViewById(R.id.rl);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawer, toolbar, R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        final NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                View rootView = getWindow().getDecorView().getRootView();
+                return NavigationUtils.onNavigationItemSelectedHelper(item, MainActivity.this, rootView);
+            }
+        });
+        View header = navigationView.getHeaderView(0);
+        TextView activityName = header.findViewById(R.id.activity_name);
+        TextView activityVersion = header.findViewById(R.id.activity_version);
+        activityName.setText(ACTIVITY_NAME);
+        activityVersion.setText(ACTIVITY_VERSION);
+
+        Toast.makeText(MainActivity.this,"Welcome Page Loaded",Toast.LENGTH_SHORT).show();
+        LinearLayout mainActivityLayout = findViewById(R.id.mainActivityLayout);
+        // TODO: Put the EditText and associated button in Fragment [req 5]
         final EditText et = (EditText)findViewById(R.id.editTextMainActivity);
         // TODO: Check if SharedPref present, if so, then set it to SharedPref [req: 10]
         Button setGreeting = (Button)findViewById(R.id.setGreetingMainActivity);
@@ -34,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 et.setClickable(false);
             }
         });
-        Snackbar snackbar = Snackbar.make(rl,"Welcome to News App",Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(mainActivityLayout,"Welcome to News App",Snackbar.LENGTH_SHORT);
         snackbar.show();
         Button loadNews = (Button) findViewById(R.id.load_news);
         loadNews.setOnClickListener(new View.OnClickListener() {
@@ -71,4 +108,58 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch(item.getItemId()) {
+            case R.id.myHome:
+                intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.myNews:
+                intent = new Intent(getApplicationContext(), NewsList.class);
+                startActivity(intent);
+                break;
+            case R.id.myFav:
+                intent = new Intent(getApplicationContext(), Favorites.class);
+                startActivity(intent);
+                break;
+            case R.id.mySettings:
+                intent = new Intent(getApplicationContext(), Settings.class);
+                startActivity(intent);
+                break;
+        }
+        return true;
+    }
+
+    /*private boolean onNavigationItemSelectedHelper(MenuItem item) {
+        Intent intent;
+        switch(item.getItemId()) {
+            case R.id.myHome:
+                intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.myNews:
+                intent = new Intent(getApplicationContext(), NewsList.class);
+                startActivity(intent);
+                break;
+            case R.id.myFav:
+                intent = new Intent(getApplicationContext(), Favorites.class);
+                startActivity(intent);
+                break;
+            case R.id.mySettings:
+                intent = new Intent(getApplicationContext(), Settings.class);
+                startActivity(intent);
+                break;
+        }
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return false;
+    }*/
 }

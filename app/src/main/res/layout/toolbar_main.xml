@@ -1,0 +1,9 @@
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbarMain"
+    android:minHeight="?attr/actionBarSize"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+</androidx.appcompat.widget.Toolbar>
+
