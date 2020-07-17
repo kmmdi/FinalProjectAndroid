@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">FinalProjectAndroid</string>
+    <string name="app_name">Latest News</string>
+    <string name="load_news">Load BBC Headline</string>
+    <string name="set_greeting">Set Greeting</string>
+    <string name="main_activity_edit_text">Welcome User!</string>
+    <string name="news_list_edit_text">Write and save a note here!</string>
+    <string name="save_note">Save</string>
 </resources>
