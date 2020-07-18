@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +45,7 @@ public class Settings extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 View rootView = getWindow().getDecorView().getRootView();
-                return NavigationUtils.onNavigationItemSelectedHelper(item, Settings.this, rootView);
+                return Utils.onNavigationItemSelectedHelper(item, Settings.this, rootView);
             }
         });
         View header = navigationView.getHeaderView(0);
@@ -98,25 +97,6 @@ public class Settings extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch(item.getItemId()) {
-            case R.id.myHome:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.myNews:
-                intent = new Intent(getApplicationContext(), NewsList.class);
-                startActivity(intent);
-                break;
-            case R.id.myFav:
-                intent = new Intent(getApplicationContext(), Favorites.class);
-                startActivity(intent);
-                break;
-            case R.id.mySettings:
-                intent = new Intent(getApplicationContext(), Settings.class);
-                startActivity(intent);
-                break;
-        }
-        return true;
+        return Utils.onOptionsItemSelectedHelpder(item, Settings.this);
     }
 }

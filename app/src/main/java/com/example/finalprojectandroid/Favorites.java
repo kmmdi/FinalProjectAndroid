@@ -44,7 +44,7 @@ public class Favorites extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 View rootView = getWindow().getDecorView().getRootView();
-                return NavigationUtils.onNavigationItemSelectedHelper(item, Favorites.this, rootView);
+                return Utils.onNavigationItemSelectedHelper(item, Favorites.this, rootView);
             }
         });
         View header = navigationView.getHeaderView(0);
@@ -93,25 +93,6 @@ public class Favorites extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch(item.getItemId()) {
-            case R.id.myHome:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.myNews:
-                intent = new Intent(getApplicationContext(), NewsList.class);
-                startActivity(intent);
-                break;
-            case R.id.myFav:
-                intent = new Intent(getApplicationContext(), Favorites.class);
-                startActivity(intent);
-                break;
-            case R.id.mySettings:
-                intent = new Intent(getApplicationContext(), Settings.class);
-                startActivity(intent);
-                break;
-        }
-        return true;
+        return Utils.onOptionsItemSelectedHelpder(item, Favorites.this);
     }
 }

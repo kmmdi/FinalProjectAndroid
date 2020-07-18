@@ -3,7 +3,6 @@ package com.example.finalprojectandroid;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -47,7 +45,7 @@ public class NewsList extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 View rootView = getWindow().getDecorView().getRootView();
-                return NavigationUtils.onNavigationItemSelectedHelper(item, NewsList.this, rootView);
+                return Utils.onNavigationItemSelectedHelper(item, NewsList.this, rootView);
             }
         });
         View header = navigationView.getHeaderView(0);
@@ -85,25 +83,6 @@ public class NewsList extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch(item.getItemId()) {
-            case R.id.myHome:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.myNews:
-                intent = new Intent(getApplicationContext(), NewsList.class);
-                startActivity(intent);
-                break;
-            case R.id.myFav:
-                intent = new Intent(getApplicationContext(), Favorites.class);
-                startActivity(intent);
-                break;
-            case R.id.mySettings:
-                intent = new Intent(getApplicationContext(), Settings.class);
-                startActivity(intent);
-                break;
-        }
-        return true;
+        return Utils.onOptionsItemSelectedHelpder(item, NewsList.this);
     }
 }
