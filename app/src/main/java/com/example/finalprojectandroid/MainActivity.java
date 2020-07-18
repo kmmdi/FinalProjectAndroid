@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         activityName.setText(ACTIVITY_NAME);
         activityVersion.setText(ACTIVITY_VERSION);
 
-        Toast.makeText(MainActivity.this,"Welcome Page Loaded",Toast.LENGTH_SHORT).show();
         LinearLayout mainActivityLayout = findViewById(R.id.mainActivityLayout);
         // TODO: Put the EditText and associated button in Fragment [req 5]
         final EditText et = (EditText)findViewById(R.id.editTextMainActivity);
@@ -69,8 +68,11 @@ public class MainActivity extends AppCompatActivity {
                 et.setClickable(false);
             }
         });
+        // Toast and Snackbar
+        Toast.makeText(MainActivity.this,"Welcome Page Loaded",Toast.LENGTH_SHORT).show();
         Snackbar snackbar = Snackbar.make(mainActivityLayout,"Welcome to News App",Snackbar.LENGTH_SHORT);
         snackbar.show();
+
         Button loadNews = (Button) findViewById(R.id.load_news);
         loadNews.setOnClickListener(new View.OnClickListener() {
             @Override

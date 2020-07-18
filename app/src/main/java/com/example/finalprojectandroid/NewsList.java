@@ -70,8 +70,10 @@ public class NewsList extends AppCompatActivity {
             }
         });
         final ListView listView= (ListView) findViewById(R.id.main_list_view);
+
         Snackbar snackbar = Snackbar.make(newsListLayout,"News Headlines from BBC",Snackbar.LENGTH_SHORT);
         snackbar.show();
+
         new Retriever(NewsList.this, feedUrl,listView).execute();
     }
 
