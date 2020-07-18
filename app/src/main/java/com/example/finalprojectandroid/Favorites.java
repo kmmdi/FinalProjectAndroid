@@ -54,9 +54,12 @@ public class Favorites extends AppCompatActivity {
         activityVersion.setText(ACTIVITY_VERSION);
 
         LinearLayout favoritesLayout = findViewById(R.id.favListLinear);
+
+        //Toast and Snackbar
         Toast.makeText(Favorites.this,"Favorites Page Loaded",Toast.LENGTH_SHORT).show();
         Snackbar snackbar = Snackbar.make(favoritesLayout,"Welcome to Favorites Page",Snackbar.LENGTH_SHORT);
         snackbar.show();
+
         // TODO: Implement and Put the EditText and associated button in Fragment [req 5]
 
         // TODO: Load favorites from DB and put them in listView [req 8]

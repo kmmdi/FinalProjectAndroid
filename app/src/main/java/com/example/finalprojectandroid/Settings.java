@@ -55,9 +55,12 @@ public class Settings extends AppCompatActivity {
         activityVersion.setText(ACTIVITY_VERSION);
 
         LinearLayout settingLayout = findViewById(R.id.settingLayout);
+
+        // Toast and Snackbar
         Toast.makeText(Settings.this,"Settings Page Loaded",Toast.LENGTH_SHORT).show();
         Snackbar snackbar = Snackbar.make(settingLayout,"Welcome to Settings Page",Snackbar.LENGTH_SHORT);
         snackbar.show();
+
         // TODO: Implement and Put the EditText and associated button in Fragment [req 5]
 
         /**
