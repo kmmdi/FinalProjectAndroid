@@ -8,26 +8,40 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Favorites extends AppCompatActivity {
 
     final static String ACTIVITY_NAME = "Favorites";
     final static String ACTIVITY_VERSION = "1.0.0";
+    DatabaseUtils databaseUtils;
+    SQLiteDatabase db;
+    ArrayList<NewsArticle> newsArticles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
+
+        initDb();
+        newsArticles = databaseUtils.loadNewsArticles(db);
+        final ListView listView= (ListView) findViewById(R.id.fav_list_view);
+        listView.setAdapter(new NewsListAdapter(Favorites.this, newsArticles));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbar);
@@ -67,6 +81,12 @@ public class Favorites extends AppCompatActivity {
         // TODO: Show Alert dialog - utilize showAlert below
     }
 
+    private void initDb() {
+        databaseUtils = new DatabaseUtils(Favorites.this);
+        db = databaseUtils.getWritableDatabase();
+    }
+
+    // TODO: use this for delete
     private void showAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(Favorites.this);
         builder.setTitle("PLACE HOLDER TEXT // Maybe for deletion")
