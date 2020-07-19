@@ -8,26 +8,41 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Favorites extends AppCompatActivity {
 
     final static String ACTIVITY_NAME = "Favorites";
     final static String ACTIVITY_VERSION = "1.0.0";
+    final static String SHARED_PREF_KEY = "Favorites_SP";
+    DatabaseUtils databaseUtils;
+    SQLiteDatabase db;
+    ArrayList<NewsArticle> newsArticles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
+
+        initDb();
+        newsArticles = databaseUtils.loadNewsArticles(db);
+        final ListView listView= (ListView) findViewById(R.id.fav_list_view);
+        listView.setAdapter(new NewsListAdapter(Favorites.this, newsArticles));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbar);
@@ -55,37 +70,23 @@ public class Favorites extends AppCompatActivity {
 
         LinearLayout favoritesLayout = findViewById(R.id.favListLinear);
 
-        //Toast and Snackbar
-        Toast.makeText(Favorites.this,"Favorites Page Loaded",Toast.LENGTH_SHORT).show();
         Snackbar snackbar = Snackbar.make(favoritesLayout,"Welcome to Favorites Page",Snackbar.LENGTH_SHORT);
         snackbar.show();
 
-        // TODO: Implement and Put the EditText and associated button in Fragment [req 5]
-
-        // TODO: Load favorites from DB and put them in listView [req 8]
-        // TODO: Long Press for option to remove from DB (and list view) [req 8]
-        // TODO: Show Alert dialog - utilize showAlert below
+        //Fragment and Shared Pref
+        Bundle dataToPass = new Bundle();
+        dataToPass.putString("sharedPrefKey", SHARED_PREF_KEY);
+        CustomActivityGreeting cag = new CustomActivityGreeting();
+        cag.setArguments(dataToPass);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentSpace, cag)
+                .commit();
     }
 
-    private void showAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Favorites.this);
-        builder.setTitle("PLACE HOLDER TEXT // Maybe for deletion")
-                .setMessage("Do you want to continue?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO: Do my action here
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(Favorites.this,"Selected Option: No",Toast.LENGTH_SHORT).show();
-                    }
-                });
-        AlertDialog dialog  = builder.create();
-        dialog.show();
+    private void initDb() {
+        databaseUtils = new DatabaseUtils(Favorites.this);
+        db = databaseUtils.getWritableDatabase();
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.finalprojectandroid;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -18,10 +19,13 @@ public class NewsListAdapter extends BaseAdapter {
 
     Context context;
     ArrayList<NewsArticle> newsArticles;
+    DatabaseUtils databaseUtils;
+    SQLiteDatabase db;
 
     public NewsListAdapter(Context context, ArrayList<NewsArticle> newsArticles) {
         this.context = context;
         this.newsArticles = newsArticles;
+        initDb();
     }
 
     @Override
@@ -60,6 +64,7 @@ public class NewsListAdapter extends BaseAdapter {
         titleText.setText(title);
         descriptionText.setText(Html.fromHtml(description));
         dateText.setText(date);
+        dateText.setText(date);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +90,94 @@ public class NewsListAdapter extends BaseAdapter {
             }
         });
 
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (context instanceof NewsList) {
+                    showAlertForNewsList(title, description, date, guid, link);
+                } else if (context instanceof Favorites){
+                    showAlertForFavorites(title, description, date, guid, link);
+                }
+                return false;
+            }
+        });
+
         return convertView;
+    }
+
+    private void showAlertForNewsList(final String... details) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Adding to Favorites")
+                .setMessage("Do you want to continue?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        NewsArticle newsArticle = new NewsArticle();
+                        newsArticle.setGuid(details[3]);
+                        newsArticle.setTitle(details[0]);
+                        newsArticle.setDescription(details[1]);
+                        newsArticle.setDate(details[2]);
+                        newsArticle.setLink(details[4]);
+                        try {
+                            databaseUtils.storeNewsArticle(newsArticle, db);
+                            Toast.makeText(context,"Added to favorites",Toast.LENGTH_SHORT).show();
+                        } catch(Exception e) {
+                            Toast.makeText(context,"Operation Failed",Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context,"Selected Option: No",Toast.LENGTH_SHORT).show();
+                    }
+                });
+        AlertDialog dialog  = builder.create();
+        dialog.show();
+    }
+
+    private void showAlertForFavorites(final String... details) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Removing from Favorites")
+                .setMessage("Do you want to continue?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        NewsArticle newsArticle = new NewsArticle();
+                        newsArticle.setGuid(details[3]);
+                        newsArticle.setTitle(details[0]);
+                        newsArticle.setDescription(details[1]);
+                        newsArticle.setDate(details[2]);
+                        newsArticle.setLink(details[4]);
+                        try {
+                            databaseUtils.deleteMessage(newsArticle, db);
+                            Toast.makeText(context,"Removed from favorites",Toast.LENGTH_SHORT).show();
+                            NewsListAdapter.this.notifyDataSetChanged();
+                            ((Favorites) context).recreate();
+                        } catch(Exception e) {
+                            Toast.makeText(context,"Operation Failed",Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context,"Selected Option: No",Toast.LENGTH_SHORT).show();
+                    }
+                });
+        AlertDialog dialog  = builder.create();
+        dialog.show();
+    }
+
+    private void initDb() {
+        databaseUtils = new DatabaseUtils(context);
+        db = databaseUtils.getWritableDatabase();
     }
 
     private void openArticleOnWeb(String... details) {

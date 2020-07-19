@@ -20,25 +20,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <EditText
-            android:id="@+id/editTextMainActivity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/main_activity_edit_text" />
-
-        <Button
-            android:id="@+id/setGreetingMainActivity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/editTextMainActivity"
-            android:text="@string/set_greeting" />
+        <FrameLayout
+            android:id="@+id/fragmentSpace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </FrameLayout>
 
         <Button
             android:id="@+id/load_news"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"

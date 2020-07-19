@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ public class Settings extends AppCompatActivity {
 
     final static String ACTIVITY_NAME = "Settings";
     final static String ACTIVITY_VERSION = "1.0.0";
+    final static String SHARED_PREF_KEY = "Settings_SP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,30 +58,40 @@ public class Settings extends AppCompatActivity {
 
         LinearLayout settingLayout = findViewById(R.id.settingLayout);
 
-        // Toast and Snackbar
-        Toast.makeText(Settings.this,"Settings Page Loaded",Toast.LENGTH_SHORT).show();
         Snackbar snackbar = Snackbar.make(settingLayout,"Welcome to Settings Page",Snackbar.LENGTH_SHORT);
         snackbar.show();
 
-        // TODO: Implement and Put the EditText and associated button in Fragment [req 5]
+        //Fragment and Shared Pref
+        Bundle dataToPass = new Bundle();
+        dataToPass.putString("sharedPrefKey", SHARED_PREF_KEY);
+        CustomActivityGreeting cag = new CustomActivityGreeting();
+        cag.setArguments(dataToPass);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentSpace, cag)
+                .commit();
 
-        /**
-         * TODO: Provide option to clear all SharedPref [this is an enhancement as we need 4 activities.
-         * It's related to req 10.
-         */
-
-        // TODO: Show Alert dialog - utilize showAlert below
+        Button deleteGreetings = (Button) findViewById(R.id.delCustomGreetings);
+        deleteGreetings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlert();
+            }
+        });
     }
 
     private void showAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
-        builder.setTitle("PLACE HOLDER TEXT // maybe for confirming clearing of SharedPref")
+        builder.setTitle("Deleting Custom Greetings")
                 .setMessage("Do you want to continue?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO: Do my action here
+                        SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(Settings.this);
+                        sharedPrefHelper.clearAll();
+                        Toast.makeText(Settings.this,"Custom Greetings Cleared",Toast.LENGTH_SHORT).show();
+                        Settings.this.recreate();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
