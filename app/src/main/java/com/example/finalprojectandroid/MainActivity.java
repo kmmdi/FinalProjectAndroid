@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     final static String ACTIVITY_NAME = "Home";
     final static String ACTIVITY_VERSION = "1.0.0";
+    final static String SHARED_PREF_KEY = "MainActivity_SP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +53,17 @@ public class MainActivity extends AppCompatActivity {
         activityName.setText(ACTIVITY_NAME);
         activityVersion.setText(ACTIVITY_VERSION);
 
+        //Fragment and Shared Pref
+        Bundle dataToPass = new Bundle();
+        dataToPass.putString("sharedPrefKey", SHARED_PREF_KEY);
+        CustomActivityGreeting cag = new CustomActivityGreeting();
+        cag.setArguments(dataToPass);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentSpace, cag)
+                .commit();
+
         LinearLayout mainActivityLayout = findViewById(R.id.mainActivityLayout);
-        // TODO: Put the EditText and associated button in Fragment [req 5]
-        final EditText et = (EditText)findViewById(R.id.editTextMainActivity);
-        // TODO: Check if SharedPref present, if so, then set it to SharedPref [req: 10]
-        Button setGreeting = (Button)findViewById(R.id.setGreetingMainActivity);
-        setGreeting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: implement sharing to SharedPref [req: 10]
-                et.setText(et.getText());
-                et.setFocusable(false);
-                et.setFocusableInTouchMode(false);
-                et.setClickable(false);
-            }
-        });
-        // Toast and Snackbar
-        Toast.makeText(MainActivity.this,"Welcome Page Loaded",Toast.LENGTH_SHORT).show();
         Snackbar snackbar = Snackbar.make(mainActivityLayout,"Welcome to News App",Snackbar.LENGTH_SHORT);
         snackbar.show();
 

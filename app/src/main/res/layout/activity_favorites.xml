@@ -22,19 +22,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <EditText
-            android:id="@+id/editTextFav"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/news_list_edit_text"/>
-
-        <Button
-            android:id="@+id/saveNoteFav"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/save_note" />
+        <FrameLayout
+            android:id="@+id/fragmentSpace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </FrameLayout>
 
         <ListView
             android:id="@+id/fav_list_view"

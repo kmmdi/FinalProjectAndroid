@@ -5,20 +5,33 @@
     android:layout_height="match_parent"
     tools:openDrawer="start"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Settings"
+        android:orientation="vertical"
         android:id="@+id/settingLayout">
 
         <include
             layout="@layout/toolbar_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <FrameLayout
+            android:id="@+id/fragmentSpace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/delCustomGreetings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/del_custom_greet" />
 
     </LinearLayout>
 

@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,6 +20,7 @@ public class NewsList extends AppCompatActivity {
     final static String ACTIVITY_NAME = "News";
     final static String ACTIVITY_VERSION = "1.0.0";
     final static String feedUrl ="http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml";
+    final static String SHARED_PREF_KEY = "NewsList_SP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,23 +51,18 @@ public class NewsList extends AppCompatActivity {
         activityName.setText(ACTIVITY_NAME);
         activityVersion.setText(ACTIVITY_VERSION);
 
-        LinearLayout newsListLayout = findViewById(R.id.newsListLinear);
-        // TODO: Put the EditText and associated button in Fragment [req 5]
-        final EditText et = (EditText)findViewById(R.id.editTextNewsList);
-        // TODO: Check if SharedPref present, if so, then set it to SharedPref [req: 10]
-        Button saveNote = (Button)findViewById(R.id.saveNoteNewsList);
-        saveNote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: implement sharing to SharedPref [req: 10]
-                et.setText(et.getText());
-                et.setFocusable(false);
-                et.setFocusableInTouchMode(false);
-                et.setClickable(false);
-            }
-        });
-        final ListView listView= (ListView) findViewById(R.id.main_list_view);
+        //Fragment and Shared Pref
+        Bundle dataToPass = new Bundle();
+        dataToPass.putString("sharedPrefKey", SHARED_PREF_KEY);
+        CustomActivityGreeting cag = new CustomActivityGreeting();
+        cag.setArguments(dataToPass);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentSpace, cag)
+                .commit();
 
+        final ListView listView= (ListView) findViewById(R.id.main_list_view);
+        LinearLayout newsListLayout = findViewById(R.id.newsListLinear);
         Snackbar snackbar = Snackbar.make(newsListLayout,"News Headlines from BBC",Snackbar.LENGTH_SHORT);
         snackbar.show();
 
