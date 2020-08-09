@@ -5,6 +5,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * This class facilitates HTTP connection
+ * @author Kazi Muntaha Mahdi
+ */
 public class HttpConnector {
 
     public static Object connect(String urlAddress) {

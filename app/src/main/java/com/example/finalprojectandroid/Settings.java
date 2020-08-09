@@ -20,10 +20,23 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+/**
+ * This activity provides some app-wide settings
+ * @author Kazi Muntaha Mahdi
+ */
 public class Settings extends AppCompatActivity {
 
+    /**
+     * Activity display name
+     */
     final static String ACTIVITY_NAME = "Settings";
+    /**
+     * Activity version
+     */
     final static String ACTIVITY_VERSION = "1.0.0";
+    /**
+     * Shared preference key for the activity
+     */
     final static String SHARED_PREF_KEY = "Settings_SP";
 
     @Override
@@ -31,11 +44,12 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-
+        // toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        // navigation
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawer, toolbar, R.string.open, R.string.close);
@@ -58,6 +72,7 @@ public class Settings extends AppCompatActivity {
 
         LinearLayout settingLayout = findViewById(R.id.settingLayout);
 
+        // Snackbar
         Snackbar snackbar = Snackbar.make(settingLayout,"Welcome to Settings Page",Snackbar.LENGTH_SHORT);
         snackbar.show();
 
@@ -71,6 +86,7 @@ public class Settings extends AppCompatActivity {
                 .replace(R.id.fragmentSpace, cag)
                 .commit();
 
+        // Button to delete all custom greetings
         Button deleteGreetings = (Button) findViewById(R.id.delCustomGreetings);
         deleteGreetings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +96,9 @@ public class Settings extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method for showing alert for this activity
+     */
     private void showAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
         builder.setTitle("Deleting Custom Greetings")

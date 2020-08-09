@@ -15,11 +15,27 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+/**
+ * This class creates the list view for bbc news feed
+ * @author Kazi Muntaha Mahdi
+ */
 public class NewsList extends AppCompatActivity {
 
+    /**
+     * Activity display name
+     */
     final static String ACTIVITY_NAME = "News";
+    /**
+     * Activity version
+     */
     final static String ACTIVITY_VERSION = "1.0.0";
+    /**
+     * bbc feed url
+     */
     final static String feedUrl ="http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml";
+    /**
+     * Shared preference key for this activity
+     */
     final static String SHARED_PREF_KEY = "NewsList_SP";
 
     @Override
@@ -27,10 +43,12 @@ public class NewsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
 
+        // toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        // navigation
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawer, toolbar, R.string.open, R.string.close);
@@ -61,11 +79,15 @@ public class NewsList extends AppCompatActivity {
                 .replace(R.id.fragmentSpace, cag)
                 .commit();
 
+        // Listview for news
         final ListView listView= (ListView) findViewById(R.id.main_list_view);
         LinearLayout newsListLayout = findViewById(R.id.newsListLinear);
+
+        // Snackbar
         Snackbar snackbar = Snackbar.make(newsListLayout,"News Headlines from BBC",Snackbar.LENGTH_SHORT);
         snackbar.show();
 
+        // Creates new retriever object to retrieve news
         new Retriever(NewsList.this, feedUrl,listView).execute();
     }
 
