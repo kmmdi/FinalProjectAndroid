@@ -8,10 +8,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import java.util.ArrayList;
 
+/**
+ * Database utility class
+ * @author Kazi Muntaha Mahdi
+ */
 public class DatabaseUtils extends SQLiteOpenHelper {
 
+    /**
+     * Name of the database
+     */
     protected final static String DATABASE_NAME = "NewsDb_KM";
+    /**
+     * Database version
+     */
     protected final static int VERSION_NUM = 1;
+    /**
+     * Database table name
+     */
     public final static String TABLE_NAME = "NewsMeta";
     public final static String COL_ID = "_id";
     public final static String COL_TITLE = "title";
@@ -40,6 +53,11 @@ public class DatabaseUtils extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * Loads news from the database
+     * @param db
+     * @return ArrayList of NewsArticle
+     */
     public ArrayList<NewsArticle> loadNewsArticles (SQLiteDatabase db) {
         ArrayList<NewsArticle> newsList = new ArrayList<>();
         String[] columns = new String[] {COL_ID, COL_TITLE, COL_DESCRIPTION, COL_LINK, COL_DATE};
@@ -73,6 +91,11 @@ public class DatabaseUtils extends SQLiteOpenHelper {
         return newsList;
     }
 
+    /**
+     * Stores news article to database
+     * @param newsArticle NewsArticle Object
+     * @param db database object
+     */
     public void storeNewsArticle(NewsArticle newsArticle, SQLiteDatabase db) {
         ContentValues cValues = new ContentValues();
         cValues.put(COL_ID, newsArticle.getGuid());
@@ -83,7 +106,12 @@ public class DatabaseUtils extends SQLiteOpenHelper {
         db.insert(TABLE_NAME, null, cValues);
     }
 
-    public void deleteMessage(NewsArticle newsArticle, SQLiteDatabase db) {
+    /**
+     * Deletes news article from the database
+     * @param newsArticle NewsArticle object
+     * @param db Database object
+     */
+    public void deleteNewsArticle(NewsArticle newsArticle, SQLiteDatabase db) {
         db.delete(TABLE_NAME, "_id=?", new String[] { newsArticle.getGuid() } );
     }
 

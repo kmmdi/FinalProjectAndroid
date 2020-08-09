@@ -15,6 +15,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import java.util.ArrayList;
 
+/**
+ * This class provides a customer adapter for the news list
+ * @author Kazi Muntaha Mahdi
+ */
 public class NewsListAdapter extends BaseAdapter {
 
     Context context;
@@ -49,8 +53,11 @@ public class NewsListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.model, parent, false);
         }
 
+        // Title of the news
         TextView titleText = (TextView) convertView.findViewById(R.id.title_text);
+        // Description of the news
         TextView descriptionText = (TextView) convertView.findViewById(R.id.details_text);
+        // Date of the news
         TextView dateText = (TextView) convertView.findViewById(R.id.date_text);
 
         NewsArticle newsArticle = (NewsArticle) this.getItem(position);
@@ -105,6 +112,10 @@ public class NewsListAdapter extends BaseAdapter {
         return convertView;
     }
 
+    /**
+     * This method shows alert for the news list items
+     * @param details contains news title, description, date, guid, and link
+     */
     private void showAlertForNewsList(final String... details) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Adding to Favorites")
@@ -139,6 +150,10 @@ public class NewsListAdapter extends BaseAdapter {
         dialog.show();
     }
 
+    /**
+     * This method shows alert for the favorites list
+     * @param details contains news title, description, date, guid, and link
+     */
     private void showAlertForFavorites(final String... details) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Removing from Favorites")
@@ -154,7 +169,7 @@ public class NewsListAdapter extends BaseAdapter {
                         newsArticle.setDate(details[2]);
                         newsArticle.setLink(details[4]);
                         try {
-                            databaseUtils.deleteMessage(newsArticle, db);
+                            databaseUtils.deleteNewsArticle(newsArticle, db);
                             Toast.makeText(context,"Removed from favorites",Toast.LENGTH_SHORT).show();
                             NewsListAdapter.this.notifyDataSetChanged();
                             ((Favorites) context).recreate();
@@ -175,11 +190,18 @@ public class NewsListAdapter extends BaseAdapter {
         dialog.show();
     }
 
+    /**
+     * Initialize database
+     */
     private void initDb() {
         databaseUtils = new DatabaseUtils(context);
         db = databaseUtils.getWritableDatabase();
     }
 
+    /**
+     * Opens an article on the browser
+     * @param details contains news title, description, date, guid, and link
+     */
     private void openArticleOnWeb(String... details) {
         String url = details[4];
         Intent i = new Intent(Intent.ACTION_VIEW);

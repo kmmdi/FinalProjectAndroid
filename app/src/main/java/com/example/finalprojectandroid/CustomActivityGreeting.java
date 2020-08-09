@@ -8,8 +8,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * Fragment for Custom greetings
+ */
 public class CustomActivityGreeting extends Fragment {
 
+    /**
+     * data passed by the activity to the fragment
+     */
     private Bundle dataFromActivity;
 
 

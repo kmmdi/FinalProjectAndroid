@@ -25,10 +25,23 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This is the activity for favorite news items
+ * @author Kazi Muntaha Mahdi
+ */
 public class Favorites extends AppCompatActivity {
 
+    /**
+     * Activity display name
+     */
     final static String ACTIVITY_NAME = "Favorites";
+    /**
+     * Activity version
+     */
     final static String ACTIVITY_VERSION = "1.0.0";
+    /**
+     * Activity shared preference
+     */
     final static String SHARED_PREF_KEY = "Favorites_SP";
     DatabaseUtils databaseUtils;
     SQLiteDatabase db;
@@ -39,15 +52,20 @@ public class Favorites extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
 
+        // Initialize database and get news from db
         initDb();
         newsArticles = databaseUtils.loadNewsArticles(db);
+
+        // List view for favorite news items
         final ListView listView= (ListView) findViewById(R.id.fav_list_view);
         listView.setAdapter(new NewsListAdapter(Favorites.this, newsArticles));
 
+        // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        // Navigation
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawer, toolbar, R.string.open, R.string.close);
@@ -70,6 +88,7 @@ public class Favorites extends AppCompatActivity {
 
         LinearLayout favoritesLayout = findViewById(R.id.favListLinear);
 
+        // Snackbar
         Snackbar snackbar = Snackbar.make(favoritesLayout,"Welcome to Favorites Page",Snackbar.LENGTH_SHORT);
         snackbar.show();
 
@@ -84,6 +103,9 @@ public class Favorites extends AppCompatActivity {
                 .commit();
     }
 
+    /**
+     * Initializes database
+     */
     private void initDb() {
         databaseUtils = new DatabaseUtils(Favorites.this);
         db = databaseUtils.getWritableDatabase();

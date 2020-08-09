@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+/**
+ * This class parse RSS news feed provided by bbc
+ * @author Kazi Muntaha Mahdi
+ */
 public class FeedParser extends AsyncTask<Void,Void,Boolean> {
 
     Context context;
@@ -51,6 +55,11 @@ public class FeedParser extends AsyncTask<Void,Void,Boolean> {
             Toast.makeText(context,"Could Not Parse",Toast.LENGTH_SHORT).show();
         }
     }
+
+    /**
+     * This method parse retrieved rss news feed from bbc
+     * @return boolean
+     */
     private Boolean parseFeed() {
         try {
             XmlPullParserFactory parserFactory = XmlPullParserFactory.newInstance();

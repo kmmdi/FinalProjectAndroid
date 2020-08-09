@@ -1,5 +1,9 @@
 package com.example.finalprojectandroid;
 
+/**
+ * This is the class for each news article
+ * @author Kazi Muntaha Mahdi
+ */
 public class NewsArticle {
 
     String title, description, date, guid, link;

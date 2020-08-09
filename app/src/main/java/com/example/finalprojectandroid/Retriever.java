@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 
+/**
+ * This class is for retrieving news asynchronously from bbc
+ * @author Kazi Muntaha Mahdi
+ */
 public class Retriever extends AsyncTask<Void,Void,Object> {
 
     Context context;
@@ -53,6 +57,10 @@ public class Retriever extends AsyncTask<Void,Void,Object> {
         }
     }
 
+    /**
+     * Method for retrieving news over an http connection
+     * @return Object
+     */
     private Object retrieveNewsData() {
         Object connection = HttpConnector.connect(feedUrl);
         if(connection.toString().startsWith("Error")) {

@@ -18,10 +18,23 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+/**
+ * This class is the entry point for the app
+ * @author: Kazi Muntaha Mahdi
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Activity display name
+     */
     final static String ACTIVITY_NAME = "Home";
+    /**
+     * Activity version
+     */
     final static String ACTIVITY_VERSION = "1.0.0";
+    /**
+     * Shared preference key associated with this activity
+     */
     final static String SHARED_PREF_KEY = "MainActivity_SP";
 
     @Override
@@ -29,10 +42,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // This initiates the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        // Navigation / drawer are defined here
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawer, toolbar, R.string.open, R.string.close);
@@ -63,10 +78,12 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragmentSpace, cag)
                 .commit();
 
+        // Snackbar
         LinearLayout mainActivityLayout = findViewById(R.id.mainActivityLayout);
         Snackbar snackbar = Snackbar.make(mainActivityLayout,"Welcome to News App",Snackbar.LENGTH_SHORT);
         snackbar.show();
 
+        // Clicking this button will fetch news from bbc
         Button loadNews = (Button) findViewById(R.id.load_news);
         loadNews.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This is a method for that showing alert for this activity
+     * @return void
+     */
     private void showAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Loading News from BBC")
@@ -97,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * This method opens new activity with news list fetched from bbc
+     */
     private void openNewsList() {
         Intent intent = new Intent(getApplicationContext(), NewsList.class);
         startActivity(intent);
